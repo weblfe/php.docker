@@ -1,0 +1,9 @@
+FROM weblinuxgame/php7.3-fpm-amqp:v0.1.1
+
+MAINTAINER php php7.3 weblfe dev amqp
+
+COPY queue.sh /bin/init.sh
+
+WORKDIR /home/site/wwwroot/bongolive
+
+ENTRYPOINT ["/bin/init.sh"]

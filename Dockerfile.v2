@@ -1,0 +1,28 @@
+FROM weblinuxgame/php5.6-apache2
+MAINTAINER php apache2 weblfe dev amqp
+
+# install the PHP extensions we need
+RUN apt-get update \
+   && apt-get install -y --no-install-recommends  librabbitmq-dev  cmake wget unzip \
+   && wget https://github.com/alanxz/rabbitmq-c/archive/v0.9.0.zip \
+   && unzip v0.9.0.zip \
+   && rm -f v0.9.0.zip \
+   && cd rabbitmq-c-0.9.0/ \
+   && cmake -DCMAKE_INSTALL_PREFIX=/usr/local/rabbitmq-c-0.9.0/ \
+   && make && make install \
+   && pecl install http://pecl.php.net/get/amqp-1.9.4.tgz \
+   && docker-php-ext-enable amqp \
+   &&  cd ../ \
+   && rm -rf rabbitmq-c-0.9.0
+
+EXPOSE 443 80 8080
+
+ENV APACHE_RUN_USER www-data
+ENV PHP_VERSION 5.6.40
+ENV PORT 8080
+ENV WEBSITE_ROLE_INSTANCE_ID localRoleInstance
+ENV WEBSITE_INSTANCE_ID localInstance
+
+WORKDIR /var/www/html
+
+ENTRYPOINT ["/bin/init.sh"]
