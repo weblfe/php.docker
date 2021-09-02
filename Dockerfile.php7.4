@@ -71,6 +71,8 @@ RUN set -eux; \
             protobuf \
             mongodb \
     ; \
+    docker-php-ext-configure gd --with-png-dir=/usr --with-jpeg-dir=/usr  --with-freetype-dir=/usr/include/freetype2 \
+    ; \
     docker-php-ext-install gd \
          mysqli \
          opcache \
