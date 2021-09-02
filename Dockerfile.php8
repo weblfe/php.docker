@@ -20,6 +20,7 @@ RUN apk add --no-cache \
 		curl \
 		tar \
 		xz \
+        libgomp \
 		imagemagick-dev  \
 		imagemagick  \
 		libmcrypt-dev  \
